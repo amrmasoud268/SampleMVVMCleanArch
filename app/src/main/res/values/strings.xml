@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">POP Movies</string>
+    <string name="retry">RETRY</string>
+    <string name="no_results">No Movies</string>
+    <string name="release_on">Released on %s</string>
+    <string name="total_vote">Total votes %d</string>
+</resources>
