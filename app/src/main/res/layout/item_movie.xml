@@ -1,88 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="?android:attr/selectableItemBackground"
-    android:clickable="true"
-    android:focusable="true"
-    android:orientation="vertical"
-    android:paddingStart="@dimen/activity_horizontal_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/row_padding_vertical"
-    android:paddingEnd="2dp"
-    android:paddingRight="2dp"
-    android:paddingBottom="@dimen/row_padding_vertical">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:id="@+id/ivMovie"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:contentDescription="@string/app_name"
-        android:scaleType="fitCenter"
-        app:srcCompat="@drawable/ic_launcher_background"
-        tools:ignore="VectorDrawableCompat" />
+    <data>
+        <variable
+            name="movie"
+            type="com.example.samplemvvmcleanarch.domin.models.MovieModel" />
+    </data>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignBottom="@+id/ivMovie"
-        android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/ivMovie"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
         android:orientation="vertical"
-        android:layout_alignParentRight="true"
-        android:layout_toRightOf="@+id/ivMovie">
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/row_padding_vertical"
+        android:paddingEnd="2dp"
+        android:paddingRight="2dp"
+        android:paddingBottom="@dimen/row_padding_vertical">
 
-        <TextView
-            android:id="@+id/tvTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="@color/title"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            tools:text="Movie Title" />
+        <ImageView
+            android:id="@+id/ivMovie"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:contentDescription="@string/app_name"
+            android:scaleType="fitCenter"
+            app:load="@{movie.backdropPath}"
+            app:srcCompat="@drawable/ic_launcher_background"
+            tools:ignore="VectorDrawableCompat" />
 
-        <TextView
-            android:id="@+id/tvRelease"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="@color/year"
-            android:textSize="16sp"
-            android:textStyle="normal"
-            tools:text="Movie Release" />
-
-        <TextView
-            android:id="@+id/tvVotes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="@color/year"
-            android:textSize="13sp"
-            android:textStyle="normal"
-            tools:text="Number of Votes" />
-
-        <RatingBar
-            android:id="@+id/tvRatings"
-            style="@android:style/Widget.DeviceDefault.Light.RatingBar.Small"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:isIndicator="true"
-            android:max="5"
-            android:numStars="5"
-            android:paddingTop="@dimen/rating_padding_vertical"
-            android:rating="2"
-            android:stepSize="0.5" />
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@+id/ivMovie"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_toEndOf="@+id/ivMovie"
+            android:layout_toRightOf="@+id/ivMovie"
+            android:orientation="vertical">
 
-</RelativeLayout>
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/title"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:text="@{movie.title}"
+                tools:text="Movie Title" />
+
+            <TextView
+                android:id="@+id/tvRelease"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/year"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                android:text="@{movie.releaseDate}"
+                tools:text="Movie Release" />
+
+            <TextView
+                android:id="@+id/tvVotes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/year"
+                android:textSize="13sp"
+                android:textStyle="normal"
+                tools:text="@{movie.voteCount.toString()}" />
+
+            <RatingBar
+                android:id="@+id/tvRatings"
+                style="@android:style/Widget.DeviceDefault.Light.RatingBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="true"
+                android:max="5"
+                android:numStars="5"
+                android:paddingTop="@dimen/rating_padding_vertical"
+                android:rating="@{movie.voteAverage}"
+                android:stepSize="0.5" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</layout>

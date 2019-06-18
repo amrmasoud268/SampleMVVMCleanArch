@@ -22,7 +22,7 @@ class MoviesActivity : BaseActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    lateinit var viewModel: MoviesViewModel
+    lateinit var moviesViewModel: MoviesViewModel
 
     @Inject
     lateinit var adapter: MovieAdapter
@@ -35,7 +35,7 @@ class MoviesActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movies)
 
-        viewModel = ViewModelProviders.of(this, viewModelFactory)[MoviesViewModel::class.java]
+        moviesViewModel = ViewModelProviders.of(this, viewModelFactory)[MoviesViewModel::class.java]
 
         initAdapter()
         initSwipeToRefresh()
@@ -54,24 +54,24 @@ class MoviesActivity : BaseActivity() {
     }
 
     private fun initSwipeToRefresh() {
-        movies_swipe_refresh_layout.setOnRefreshListener {
+        swMovies.setOnRefreshListener {
             fetchMovies()
         }
     }
 
     private fun observeMoviesList() {
-        viewModel.moviesLiveData.observe(this, Observer { moviesLiveData ->
-            movies_swipe_refresh_layout.post {
-                movies_swipe_refresh_layout.isRefreshing =
+        moviesViewModel.moviesLiveData.observe(this, Observer { moviesLiveData ->
+            swMovies.post {
+                swMovies.isRefreshing =
                         moviesLiveData.networkState.status == NetworkState.LOADING.status
             }
             when (moviesLiveData.networkState) {
                 NetworkState.Success -> {
-                    adapter.add(moviesLiveData?.movieModels)
+                    adapter.setMovies(moviesLiveData?.movieModels)
                     showEmptyList(moviesLiveData.movieModels?.isEmpty() ?: false)
                 }
                 NetworkState.LOADING -> {
-                    // Loading
+                    //Loading
                 }
                 else -> {
                     showEmptyList(moviesLiveData.networkState.message != null, moviesLiveData.networkState.message)
@@ -81,7 +81,7 @@ class MoviesActivity : BaseActivity() {
     }
 
     private fun fetchMovies(pageNumber: Int = 1) {
-        viewModel.fetchMovies(pageNumber)
+        moviesViewModel.fetchMovies(pageNumber)
         if (pageNumber == 1)
             adapter.clear()
     }

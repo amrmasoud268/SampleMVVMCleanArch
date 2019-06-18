@@ -17,4 +17,6 @@ data class MovieModel(
         val popularity: Double? = null,
         val voteCount: Int? = null,
         val backdropPath: String? = null
-)
+) {
+    fun getVoteAverage() = (voteAverage?.toFloat() ?: 1F / 2).toInt()
+}
