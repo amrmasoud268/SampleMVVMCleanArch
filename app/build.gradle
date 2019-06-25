@@ -51,6 +51,8 @@ android {
         enabled = true
     }
 
+    kapt { generateStubs = true }
+
     packagingOptions {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/LGPL2.1'
